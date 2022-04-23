@@ -1,0 +1,63 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.feryaeljustice.myapplication"
+        minSdk 16
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    buildTypes {
+        debug{
+            debuggable true
+            buildConfigField "String", "MIDTRANS_API", "\"https://app.sandbox.midtrans.com/snap/v1\""
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // MANDATORY FOR FLAVORS the line below
+    flavorDimensions "version"
+    productFlavors{
+        freeVersion{
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+            buildConfigField 'String','URL','"cursofer.com"'
+            buildConfigField 'boolean','FER_CRACK','false'
+        }
+        premiumVersion{
+            applicationIdSuffix ".premium"
+            versionNameSuffix "-premium"
+            buildConfigField 'String','URL','"cursoferyael.com"'
+            buildConfigField 'boolean','FER_CRACK','true'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
