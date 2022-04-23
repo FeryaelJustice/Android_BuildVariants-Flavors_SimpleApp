@@ -17,32 +17,52 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
+            minifyEnabled false
+            shrinkResources false
             debuggable true
-            buildConfigField "String", "MIDTRANS_API", "\"https://app.sandbox.midtrans.com/snap/v1\""
+            buildConfigField "String", "MIDTRANS_API", "\"https://app.sandbox.midtrans.com/snap/v1d/debug\""
         }
         release {
             minifyEnabled true
             shrinkResources true
+            debuggable false
+            buildConfigField "String", "MIDTRANS_API", "\"https://app.sandbox.midtrans.com/snap/v1\""
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     // MANDATORY FOR FLAVORS the line below
+    //flavorDimensions += listOf("version","noversion")
     flavorDimensions "version"
-    productFlavors{
-        freeVersion{
+    productFlavors {
+        freeVersion {
+            // Assigns this product flavor to the "version" flavor dimension.
+            // If you are using only one dimension, this property is optional,
+            // and the plugin automatically assigns all the module's flavors to
+            // that dimension.
+            dimension "version"
             applicationIdSuffix ".free"
             versionNameSuffix "-free"
-            buildConfigField 'String','URL','"cursofer.com"'
-            buildConfigField 'boolean','FER_CRACK','false'
+            buildConfigField 'String', 'URL', '"cursofer.com/free"'
+            buildConfigField 'boolean', 'FER_CRACK', 'false'
         }
-        premiumVersion{
+        premiumVersion {
+            dimension "version"
             applicationIdSuffix ".premium"
             versionNameSuffix "-premium"
-            buildConfigField 'String','URL','"cursoferyael.com"'
-            buildConfigField 'boolean','FER_CRACK','true'
+            buildConfigField 'String', 'URL', '"cursofer.com/premium"'
+            buildConfigField 'boolean', 'FER_CRACK', 'true'
         }
+
+        /*
+        highApiNoVersion{
+            dimension "noversion"
+            minSdk 24
+            versionCode = 30000 + (android.defaultConfig.versionCode ?: 0)
+            versionNameSuffix "-minApi24"
+        }
+         */
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
